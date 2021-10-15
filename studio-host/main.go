@@ -32,7 +32,7 @@ func main() {
 
 // getFileSystem strips out prefixes
 func getFileSystem() http.FileSystem {
-	fsys, err := fs.Sub(static, "public")
+	fsys, err := fs.Sub(static, "web")
 	if err != nil {
 		log.Fatal(err)
 	}
