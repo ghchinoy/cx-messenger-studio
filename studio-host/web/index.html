@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head profile="http://www.w3.org/2005/10/profile">
+    <title>Dialogflow Messenger Rich Responses</title>
+    <link href="https://gstatic.com/dialogflow-console/common/assets/dialogflow/img/cx_favicon.png?version=2.0" type="image/png" rel="shortcut icon">
+    <style type="text/css">
+    .wind {
+      --mdc-theme-primary: #FDB850;
+    }
+    </style>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500" rel="stylesheet">
+    
+</head>
+<body>
+  <header class="mdc-top-app-bar mdc-top-app-bar--short wind">
+    <div class="mdc-top-app-bar__row">
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <!--<button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button">menu</button>-->
+        <span class="mdc-top-app-bar__title">Dialogflow Messenger Card Studio</span>
+      </section>
+      <!--
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Bookmark this page">bookmark</button>
+      </section>
+      -->
+    </div>
+  </header>
+  <main class="mdc-top-app-bar--short-fixed-adjust">
+    
+
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger-cx/bootstrap.js?v=1"></script>
+<df-messenger
+  df-cx="true"
+  location="us-central1"
+  chat-title="Messenger Rich Responses"
+  agent-id="00000000-0000"
+  language-code="en"
+  expand="true"
+></df-messenger>
+
+<style type="text/css">
+.rich-text-input {
+  --mdc-typography-font-family: Roboto Mono;
+  font-size: 0.70rem;
+}
+</style>
+
+<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea mdc-text-field--no-label wind">
+  <span class="mdc-notched-outline">
+    <span class="mdc-notched-outline__leading"></span>
+    <span class="mdc-notched-outline__trailing"></span>
+  </span>
+  <span class="mdc-text-field__resizer">
+    <textarea class="mdc-text-field__input rich-text-input" rows="20" cols="80" aria-label="RichText" id="RichText">
+    </textarea>
+  </span>
+</label>
+
+<button class="mdc-button mdc-button--raised foo-button wind" onClick="renderToCard()">
+  <div class="mdc-button__ripple"></div>
+  <span class="mdc-button__label">Render</span>
+</button>
+
+<div style="margin-top: 10px;">
+  <button class="mdc-button foo-button wind" onClick="replaceWith('info')">
+    <div class="mdc-button__ripple"></div>
+    <span class="mdc-button__label">Info</span>
+  </button>
+  <button class="mdc-button foo-button wind" onClick="replaceWith('description')">
+    <div class="mdc-button__ripple"></div>
+    <span class="mdc-button__label">Description</span>
+  </button>
+  <button class="mdc-button foo-button wind" onClick="replaceWith('image')">
+    <div class="mdc-button__ripple"></div>
+    <span class="mdc-button__label">Image</span>
+  </button>
+  <button class="mdc-button foo-button wind" onClick="replaceWith('button')">
+    <div class="mdc-button__ripple"></div>
+    <span class="mdc-button__label">Button</span>
+  </button>
+  <button class="mdc-button foo-button wind" onClick="replaceWith('list')">
+    <div class="mdc-button__ripple"></div>
+    <span class="mdc-button__label">List</span>
+  </button>
+  <button class="mdc-button foo-button wind" onClick="replaceWith('accordion')">
+    <div class="mdc-button__ripple"></div>
+    <span class="mdc-button__label">Accordion</span>
+  </button>
+  <button class="mdc-button foo-button wind" onClick="replaceWith('suggestion chips')">
+    <div class="mdc-button__ripple"></div>
+    <span class="mdc-button__label">Suggestion Chips</span>
+  </button>
+
+  <button class="mdc-button foo-button wind mdc-button--outlined" onClick="replaceWith('default')">
+    <div class="mdc-button__ripple"></div>
+    <span class="mdc-button__label">Reset</span>
+  </button>
+
+</div>
+
+</main>
+
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="cards.js"></script>
+<script type="text/javascript">
+  mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
+  
+  function renderToCard() {
+    const dfMessenger = document.querySelector('df-messenger');
+    var payload = document.getElementById("RichText").value;
+    dfMessenger.renderCustomCard(JSON.parse(payload));
+  }
+
+  function replaceWith(e) {
+    document.getElementById("RichText").value = JSON.stringify(cards.get(e), null, 2);
+  }
+
+// on first load, render default; set agent-id for dfMessenger component
+document.getElementById("RichText").value = JSON.stringify(cards.get('default'), null, 2);
+const dfMessenger = document.querySelector('df-messenger').setAttribute('agent-id', config.agentid);
+</script>
+
+</body>
+</html>
